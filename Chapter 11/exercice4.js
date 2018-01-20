@@ -22,6 +22,6 @@ specialForms["set"] = function(args, env) {
             return privateSet(args, prototype);
         }
 
-        throw new ReferenceError("Setting undefined variable: " + name)
+        throw new ReferenceError("Setting undefined variable: " + name);
     }
 }
