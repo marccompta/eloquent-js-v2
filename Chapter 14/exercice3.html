@@ -1,0 +1,52 @@
+<div id="wrapper">
+    <div data-tabname="one">Tab one</div>
+    <div data-tabname="two">Tab two</div>
+    <div data-tabname="three">Tab three</div>
+</div>
+
+<script>
+    function asTabs(node) {
+        var children = [];
+        var buttons = [];
+        node.childNodes.forEach(function(item) {
+            if(item.nodeType == document.ELEMENT_NODE)
+            {
+                children.push(item);
+                buttons.push(document.createElement("button"));
+            }
+        });
+
+        var defaultChildDisplayStyle = children[0].style.display;
+        var defaultButtonBackgroundColorStyle = buttons[0].style.backgroundColor;
+
+        children.forEach(function(item, index) {
+            buttons[index].appendChild(document.createTextNode((item.getAttribute("data-tabname"))));
+            buttons[index].addEventListener("click", function() { select(index); });
+            node.insertBefore(buttons[index], children[0]);
+        });
+        
+        // Initialize.
+        select(0);
+
+        function select(index)
+        {
+            for(var i = 0; i < children.length; i++)
+            {
+                if(index == i)
+                {
+                    // Show.
+                    children[i].style.display = defaultChildDisplayStyle;
+                    buttons[i].style.backgroundColor = "red";
+                }
+                else
+                {
+                    // Hide.
+                    children[i].style.display = "none";
+                    buttons[i].style.backgroundColor = defaultButtonBackgroundColorStyle;
+                }
+            }
+        }
+    }
+
+    asTabs(document.querySelector("#wrapper"));
+</script>
